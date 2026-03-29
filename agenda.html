@@ -27,7 +27,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;overscroll-behavior:none;}
-  body{background:var(--bg);color:var(--text);font-family:var(--font-mono);padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 2px);padding-top:var(--safe-top);}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-mono);padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 4px);padding-top:var(--safe-top);}
 
   .scroll-wrap{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 16px;}
   .inner{padding:20px 16px 0;}
@@ -56,8 +56,10 @@
   .day-btn.active-sunday  {color:var(--learning);  border-color:var(--learning);  background:rgba(139,136,196,0.1);}
 
   /* ── BOTTOM NAV ── */
-  .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-bottom));background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding-bottom:var(--safe-bottom);z-index:500;}
-  .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.18s;position:relative;height:100%;}
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;flex-direction:column;z-index:500;}
+  .bottom-nav-items{display:grid;grid-template-columns:repeat(4,1fr);height:var(--nav-h);}
+  .bottom-nav-safe{height:env(safe-area-inset-bottom,0px);}
+  .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.18s;position:relative;}
   .nav-item.active{color:var(--accent);}
   .nav-icon{font-size:19px;line-height:1;}
   .nav-badge{position:absolute;top:5px;right:calc(50% - 20px);background:var(--win);color:var(--bg);font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px;}
@@ -436,19 +438,22 @@
 
 <!-- Bottom nav -->
 <nav class="bottom-nav">
- <button class="nav-item active" id="nav-today" onclick="switchView('today',event)">
-  <span class="nav-icon">📋</span>Schedule
- </button>
- <button class="nav-item" id="nav-week" onclick="switchView('week',event)">
-  <span class="nav-icon">📅</span>Week
- </button>
- <button class="nav-item" id="nav-wins" onclick="switchView('wins',event)">
-  <span class="nav-icon">✦</span>Wins
-  <span class="nav-badge" id="winsBadge">0</span>
- </button>
- <button class="nav-item" id="nav-stats" onclick="switchView('stats',event)">
-  <span class="nav-icon">◎</span>Stats
- </button>
+ <div class="bottom-nav-items">
+  <button class="nav-item active" id="nav-today" onclick="switchView('today',event)">
+   <span class="nav-icon">📋</span>Schedule
+  </button>
+  <button class="nav-item" id="nav-week" onclick="switchView('week',event)">
+   <span class="nav-icon">📅</span>Week
+  </button>
+  <button class="nav-item" id="nav-wins" onclick="switchView('wins',event)">
+   <span class="nav-icon">✦</span>Wins
+   <span class="nav-badge" id="winsBadge">0</span>
+  </button>
+  <button class="nav-item" id="nav-stats" onclick="switchView('stats',event)">
+   <span class="nav-icon">◎</span>Stats
+  </button>
+ </div>
+ <div class="bottom-nav-safe"></div>
 </nav>
 
 <!-- Focus overlay -->
