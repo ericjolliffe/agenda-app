@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Agenda">
+<meta name="theme-color" content="#0e0e0e">
 <title>Agenda</title>
 <style>
   :root {
@@ -24,12 +25,14 @@
     --safe-top:env(safe-area-inset-top,0px);
     --safe-bottom:env(safe-area-inset-bottom,0px);
     --nav-h:56px;
+    --nav-total:90px;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;overscroll-behavior:none;}
-  body{background:var(--bg);color:var(--text);font-family:var(--font-mono);padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 4px);padding-top:var(--safe-top);}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-mono);display:flex;flex-direction:column;height:100dvh;padding-top:var(--safe-top);overscroll-behavior:none;}
 
-  .scroll-wrap{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 16px;}
+
+  .scroll-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 16px;min-height:0;}
   .inner{padding:20px 16px 0;}
 
   /* ── HEADER ── */
@@ -56,9 +59,8 @@
   .day-btn.active-sunday  {color:var(--learning);  border-color:var(--learning);  background:rgba(139,136,196,0.1);}
 
   /* ── BOTTOM NAV ── */
-  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;flex-direction:column;z-index:500;}
+  .bottom-nav{flex-shrink:0;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;flex-direction:column;}
   .bottom-nav-items{display:grid;grid-template-columns:repeat(4,1fr);height:var(--nav-h);}
-  .bottom-nav-safe{height:env(safe-area-inset-bottom,0px);}
   .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.18s;position:relative;}
   .nav-item.active{color:var(--accent);}
   .nav-icon{font-size:19px;line-height:1;}
@@ -453,7 +455,7 @@
    <span class="nav-icon">◎</span>Stats
   </button>
  </div>
- <div class="bottom-nav-safe"></div>
+ 
 </nav>
 
 <!-- Focus overlay -->
@@ -1081,6 +1083,7 @@ updateDate();
 setMode(autoDetect());
 populateBlockSelect();
 setInterval(function(){render();updateProgress();},60000);
+
 </script>
 
 <!-- ON-SCREEN ERROR CATCHER — shows JS errors directly on the page -->
